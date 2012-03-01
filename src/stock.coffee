@@ -44,8 +44,12 @@ module.exports = class StockedItem extends EventEmitter
 						@log.info "new data available: #{@options.uri}"
 						contentType = response.headers["content-type"]
 						
+						# parse string
+						if @options.parser is 'string'
+							@stock(response, body)
+
 						# parse JSON
-						if @options.parser is 'json' or contentType.indexOf('application/json') is 0
+						else if @options.parser is 'json' or contentType.indexOf('application/json') is 0
 							@stock(response, JSON.parse body)
 
 						# parse XML
