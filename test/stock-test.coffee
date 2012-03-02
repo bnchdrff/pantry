@@ -14,6 +14,16 @@ vows
 			'the item by default has spoiled': (topic) ->
 					assert.ok topic.hasSpoiled()
 		
+		'when fetching a string resource':
+			topic: ->
+				t = new StockedItem({uri:'http://www.ricksantorum.com/robots.txt',parser:'string'})
+				t.fetch @callback
+				return
+			
+			'a string should be returned': (error, results) ->
+				assert.ifError error
+				assert.isString results
+
 		'when fetching a json-based resource':
 			topic: ->
 				t = new StockedItem('http://search.twitter.com/search.json?q=sugar')
